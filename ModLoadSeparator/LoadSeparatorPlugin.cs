@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-[assembly: MelonInfo(typeof(ModLoadSeparator.ModLoadSeparator), "ModLoadSeparator", "1.0.1", "RinLovesYou")]
+[assembly: MelonInfo(typeof(ModLoadSeparator.ModLoadSeparator), "ModLoadSeparator", "1.0.2", "RinLovesYou")]
 [assembly: MelonGame("Alpha Blend Interactive", "ChilloutVR")]
 [assembly: MelonAdditionalCredits("Hordini")]
 
@@ -26,7 +26,12 @@ namespace ModLoadSeparator
             if (!Directory.Exists("Mods/VR"))
                 Directory.CreateDirectory("Mods/VR");
 
-            IsInVR = Environment.CommandLine.Contains("vr");
+            foreach (string commandLineArg in Environment.GetCommandLineArgs())
+                if (commandLineArg.Contains("-vr"))
+                {
+                    IsInVR = true;
+                    break;
+                }
 
             string vrOrDesktop = IsInVR ? "VR" : "Desktop";
 
